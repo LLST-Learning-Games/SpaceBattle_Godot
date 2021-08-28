@@ -13,7 +13,7 @@ func _ready():
 	
 func generate_spawn_point():
 	#first decide if it which wall it will spawn on
-	startWall = randi() % 5
+	startWall = randi() % 4
 	#startWall = NORTH
 	match startWall:
 		NORTH:
@@ -29,6 +29,7 @@ func generate_spawn_point():
 			spawnPoint.x = MAX_X
 			spawnPoint.y = rand_range(0, MAX_Y)
 	
+	print (startWall)
 	print (spawnPoint)
 	return spawnPoint
 
@@ -36,5 +37,5 @@ func generate_spawn_point():
 func _on_Timer_timeout():
 	var newRock = rockPrefab.instance()
 	add_child(newRock)
-	newRock.generateDirection(startWall)
 	newRock.position = generate_spawn_point()
+	newRock.generateDirection(startWall)

@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends RigidBody2D
 
 var direction = Vector2.ZERO
 export(int) var speed_min = 50
@@ -26,9 +26,10 @@ func generateDirection(startWall):
 	var speed = rand_range(speed_min, speed_max)
 	
 	direction = direction.normalized() * speed
-
-func _physics_process(delta):
-	move_and_collide(direction * delta)
+	apply_impulse(Vector2(), direction)
+	
+# func _integrate_forces(state):
+#	move_and_collide(direction * delta)
 
 
 func _on_LifeTimer_timeout():
