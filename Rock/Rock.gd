@@ -1,12 +1,18 @@
 extends RigidBody2D
 
+var rockScene = load("res://Rock/Rock.tscn")
+
 var direction = Vector2.ZERO
 export(int) var speed_min = 50
 export(int) var speed_max = 100
 
 enum {NORTH, WEST, SOUTH, EAST}
+enum {SMALL, MED, BIG}
 
-# Called when the node enters the scene tree for the first time.
+onready var size = BIG
+signal destroy_rock(mySize)
+
+# This should probably be moved to RockSpawner at some point
 func generateDirection(startWall):
 	match startWall:
 		NORTH:
@@ -28,9 +34,16 @@ func generateDirection(startWall):
 	direction = direction.normalized() * speed
 	apply_impulse(Vector2(), direction)
 	
-# func _integrate_forces(state):
-#	move_and_collide(direction * delta)
 
 
 func _on_LifeTimer_timeout():
 	queue_free()
+
+
+func _on_Rock_body_entered(body):
+	if size != SMALL:
+		emit_signal("destroy_rock", size)
+	queue_free()
+	
+	
+	

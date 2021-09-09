@@ -18,3 +18,5 @@ texture = ExtResource( 1 )
 position = Vector2( 296, 184 )
 
 [node name="RockSpawner" parent="." instance=ExtResource( 4 )]
+
+[connection signal="destroy_rock" from="Rock" to="RockSpawner" method="_on_Rock_destroy_rock"]

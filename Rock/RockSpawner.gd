@@ -37,5 +37,10 @@ func generate_spawn_point():
 func _on_Timer_timeout():
 	var newRock = rockPrefab.instance()
 	add_child(newRock)
+	newRock.connect("destroy_rock", self, "_on_Rock_destroy_rock")
 	newRock.position = generate_spawn_point()
 	newRock.generateDirection(startWall)
+
+
+func _on_Rock_destroy_rock(mySize):
+	print ("rock destroyed")
