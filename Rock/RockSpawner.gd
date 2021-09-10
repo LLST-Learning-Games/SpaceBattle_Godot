@@ -1,8 +1,11 @@
 extends Node
 
-export(int) var MAX_X = 320
-export(int) var MAX_Y = 180
+export(int) var MAX_X = 640
+export(int) var MAX_Y = 360
+
 enum {NORTH, WEST, SOUTH, EAST}
+enum {SMALL, MED, BIG}
+
 var startWall = NORTH
 var spawnPoint = Vector2.ZERO
 var rockPrefab = preload("res://Rock/Rock.tscn")
@@ -29,18 +32,42 @@ func generate_spawn_point():
 			spawnPoint.x = MAX_X
 			spawnPoint.y = rand_range(0, MAX_Y)
 	
-	print (startWall)
-	print (spawnPoint)
+	# print (startWall)
+	# print (spawnPoint)
 	return spawnPoint
 
 
 func _on_Timer_timeout():
+	createNewRock(BIG, generate_spawn_point(),generateDirection(startWall))
+
+
+func _on_Rock_destroy_rock(mySize, myPos):
+	# print ("rock destroyed")
+	for i in rand_range(1,3):
+		var randDirection = Vector2(rand_range(-1,1),rand_range(-1,1))
+		createNewRock(mySize - 1, myPos + randDirection * 20, randDirection)
+	
+func createNewRock(spawnSize, spawnPosition, spawnDirection):
 	var newRock = rockPrefab.instance()
 	add_child(newRock)
 	newRock.connect("destroy_rock", self, "_on_Rock_destroy_rock")
-	newRock.position = generate_spawn_point()
-	newRock.generateDirection(startWall)
-
-
-func _on_Rock_destroy_rock(mySize):
-	print ("rock destroyed")
+	newRock.position = spawnPosition
+	newRock.set_size(spawnSize)
+	newRock.set_speed(spawnDirection)
+	
+func generateDirection(startWall):
+	var direction = Vector2.ZERO
+	match startWall:
+		NORTH:
+			direction.x = rand_range(-1, 1)
+			direction.y = 1 #rand_range(0,1)
+		WEST:
+			direction.x = 1 # rand_range(0, 1)
+			direction.y = rand_range(-1,1)
+		SOUTH:
+			direction.x = rand_range(-1, 1)
+			direction.y = -1 # rand_range(-1,0)
+		EAST:
+			direction.x = -1 # rand_range(-1, 0)
+			direction.y = rand_range(-1,1)
+	return direction
