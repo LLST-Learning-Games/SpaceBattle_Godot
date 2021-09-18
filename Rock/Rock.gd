@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var rockScene = load("res://Rock/Rock.tscn")
+var explosionFX = preload("res://Effects/Explosion.tscn")
 
 var direction = Vector2.ZERO
 var rot_speed = 0
@@ -26,7 +26,15 @@ func _on_LifeTimer_timeout():
 func collide():
 	if size != SMALL:
 		emit_signal("destroy_rock", size, position)
+	
+	var newExplFX = explosionFX.instance()
+	get_parent().add_child(newExplFX)
+	newExplFX.position = position
+	newExplFX.rotation = rotation
+	
 	queue_free()
+	
+	
 	
 func set_size(newSize):
 	size = newSize
