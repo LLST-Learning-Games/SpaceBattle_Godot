@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Effects/TimeUI.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.101961, 0.25098, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0.584314, 0.709804, 1 )
+
+[node name="TimeUI" type="ProgressBar"]
+margin_left = 528.0
+margin_top = 24.0
+margin_right = 624.0
+margin_bottom = 38.0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+max_value = 60.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeLabel" type="Label" parent="."]
+margin_top = -16.0
+margin_right = 120.0
+margin_bottom = -2.0
+text = "Time Left:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 90.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

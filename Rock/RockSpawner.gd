@@ -43,14 +43,16 @@ func _on_Timer_timeout():
 
 func _on_Rock_destroy_rock(mySize, myPos):
 	# print ("rock destroyed")
-	for i in rand_range(1,3):
-		var randDirection = Vector2(rand_range(-1,1),rand_range(-1,1))
-		createNewRock(mySize - 1, myPos + randDirection * 20, randDirection)
+	if mySize != SMALL:
+		for i in rand_range(1,3):
+			var randDirection = Vector2(rand_range(-1,1),rand_range(-1,1))
+			createNewRock(mySize - 1, myPos + randDirection * 20, randDirection)
 	
 func createNewRock(spawnSize, spawnPosition, spawnDirection):
 	var newRock = rockPrefab.instance()
 	add_child(newRock)
 	newRock.connect("destroy_rock", self, "_on_Rock_destroy_rock")
+	newRock.connect("destroy_rock",get_node("../CanvasLayer/PointsUI"),"_count_destroyed")
 	newRock.position = spawnPosition
 	newRock.set_size(spawnSize)
 	newRock.set_speed(spawnDirection)

@@ -25,8 +25,8 @@ func _on_LifeTimer_timeout():
 	queue_free()
 
 func collide():
-	if size != SMALL:
-		emit_signal("destroy_rock", size, position)
+	
+	emit_signal("destroy_rock", size, position)
 	
 	var newExplFX = explosionFX.instance()
 	get_parent().add_child(newExplFX)

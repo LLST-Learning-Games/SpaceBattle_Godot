@@ -1,0 +1,20 @@
+[gd_scene format=2]
+
+[node name="PointsUI" type="Label"]
+margin_left = 256.0
+margin_top = 24.0
+margin_right = 376.0
+margin_bottom = 38.0
+text = "XX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PointsLabel" type="Label" parent="."]
+margin_top = -16.0
+margin_right = 120.0
+margin_bottom = -2.0
+text = "Asteroids Pwnt:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
