@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Effects/HealthUI.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.803922, 0.00392157, 0.00392157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.403922, 0, 0, 1 )
+
+[node name="HealthUI" type="ProgressBar"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 104.0
+margin_bottom = 22.0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 100.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

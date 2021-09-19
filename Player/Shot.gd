@@ -4,7 +4,7 @@ var explosionFX = preload("res://Effects/Explosion.tscn")
 
 export(float) var spin_speed = 10
 
-export(float) var move_speed = 100
+export(float) var move_speed = 300
 
 var direction = Vector2.UP
 

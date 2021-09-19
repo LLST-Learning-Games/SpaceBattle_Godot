@@ -1,18 +1,22 @@
 extends KinematicBody2D
 
-export(float) var TURN_SPEED = 2
-export(float) var ACCEL = 50
+export(float) var TURN_SPEED = 4
+export(float) var ACCEL = 75
 export(float) var MAX_SPEED = 100
-export(int) var maxLives = 5
+export(int) var maxHealth = 50
 
 onready var jetSprite = $JetSprite
-onready var lives = maxLives
+onready var health = maxHealth
+signal health_changed(value)
 
 var bulletPrefab = preload("res://Player/Shot.tscn")
 onready var shotPoint = $ShotPoint
 
 var movement = Vector2.ZERO
 
+#func _onready():
+#	var healthUI = get_node("../CanvasLayer/HealthUI")
+#	self.connect("health_changed",healthUI,"UpdateBar")
 
 
 func _physics_process(delta):
@@ -35,8 +39,10 @@ func _physics_process(delta):
 		shoot()
 
 func collide():
-	if lives > 0:
-		lives -= 1
+	emit_signal("health_changed", float (health) / float(maxHealth))
+	if health > 0:
+	#	emit_signal("health_changed", health / maxHealth)
+		health -= 1
 		return
 	
 	#queue_free()
