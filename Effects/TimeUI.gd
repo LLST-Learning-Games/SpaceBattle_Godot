@@ -13,3 +13,12 @@ func _process(delta):
 func _on_Timer_timeout():
 	print("You win!")
 
+
+
+func _on_Player_i_just_died():
+	timer.paused = true
+
+
+func _on_DeathButton_pressed():
+	timer.paused = false
+	timer.start()

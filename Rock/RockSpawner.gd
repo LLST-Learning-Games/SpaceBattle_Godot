@@ -10,6 +10,8 @@ var startWall = NORTH
 var spawnPoint = Vector2.ZERO
 var rockPrefab = preload("res://Rock/Rock.tscn")
 
+onready var timer = $Timer
+
 
 func _ready():
 	randomize()
@@ -73,3 +75,11 @@ func generateDirection(startWall):
 			direction.x = -1 # rand_range(-1, 0)
 			direction.y = rand_range(-1,1)
 	return direction
+
+
+func _on_Player_i_just_died():
+	timer.stop()
+
+
+func _on_DeathButton_pressed():
+	timer.start()

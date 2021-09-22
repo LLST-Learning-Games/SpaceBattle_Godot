@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/bg5.jpg" type="Texture" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,16 @@
 [ext_resource path="res://Effects/TimeUI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Effects/PointsUI.gd" type="Script" id=6]
 [ext_resource path="res://Effects/PointsUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://DeathButton.gd" type="Script" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.501961, 0.0784314, 0.945098, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.2, 0.027451, 0.380392, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.34902, 0.0509804, 0.662745, 1 )
 
 [node name="World" type="Node2D"]
 
@@ -44,4 +54,56 @@ __meta__ = {
 text = "0"
 script = ExtResource( 6 )
 
+[node name="HSLabel" type="Label" parent="CanvasLayer/PointsUI"]
+visible = false
+margin_left = 40.0
+margin_top = 152.0
+margin_right = 88.0
+margin_bottom = 166.0
+text = "000"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeathButton" type="Button" parent="CanvasLayer"]
+visible = false
+margin_left = 264.0
+margin_top = 232.0
+margin_right = 376.0
+margin_bottom = 252.0
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+text = "Try Again?"
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/DeathButton"]
+margin_left = 16.0
+margin_top = -104.0
+margin_right = 101.0
+margin_bottom = -90.0
+text = "You Got Pwnt
+
+High Score:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="health_changed" from="Player" to="CanvasLayer/HealthUI" method="_on_Player_health_changed"]
+[connection signal="i_just_died" from="Player" to="Player" method="_on_Player_i_just_died"]
+[connection signal="i_just_died" from="Player" to="RockSpawner" method="_on_Player_i_just_died"]
+[connection signal="i_just_died" from="Player" to="CanvasLayer/TimeUI" method="_on_Player_i_just_died"]
+[connection signal="i_just_died" from="Player" to="CanvasLayer/PointsUI" method="_on_Player_i_just_died"]
+[connection signal="timeout" from="Player/DeathTimer" to="CanvasLayer/DeathButton" method="_on_DeathTimer_timeout"]
+[connection signal="pressed" from="CanvasLayer/DeathButton" to="Player" method="_on_Button_pressed"]
+[connection signal="pressed" from="CanvasLayer/DeathButton" to="RockSpawner" method="_on_DeathButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/DeathButton" to="CanvasLayer/TimeUI" method="_on_DeathButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/DeathButton" to="CanvasLayer/PointsUI" method="_on_DeathButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/DeathButton" to="CanvasLayer/DeathButton" method="_on_DeathButton_pressed"]
+
+[editable path="Player"]
